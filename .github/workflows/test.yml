@@ -19,8 +19,8 @@ on:
 jobs:
   build:
     runs-on: windows-latest
-
-        
+    
+    steps:
       - name: 设置默认值
         run: |
           $use_cache = "${{ github.event.inputs.use_cache || 'yes' }}"
