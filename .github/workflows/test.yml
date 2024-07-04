@@ -24,12 +24,12 @@ jobs:
       - name: 设置默认值
         run: |
           $use_cache = "${{ github.event.inputs.use_cache || 'yes' }}"
-          $build_configs = "${{ github.event.inputs.build_configurations || 'Release,Debug' }}"
+          $build_configurations = "${{ github.event.inputs.build_configurations || 'Release,Debug' }}"
 
           echo "USE_CACHE=$use_cache" >> $env:GITHUB_ENV
-          echo "BUILD_CONFIGS=$build_configs" >> $env:GITHUB_ENV
+          echo "BUILD_CONFIGURATIONS=$build_configurations" >> $env:GITHUB_ENV
 
           echo "use_cache1: $use_cache"
-          echo "build_configurations1: $build_configs"
+          echo "build_configurations1: $build_configurations"
           
         shell: pwsh
