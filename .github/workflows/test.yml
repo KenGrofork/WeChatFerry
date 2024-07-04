@@ -21,12 +21,12 @@ jobs:
           echo "BUILD_CONFIGS=${{ github.event.inputs.build_configurations || 'Release,Debug' }}" >> $GITHUB_ENV
 
           
-          echo "use_cache1: ${{ github.event.inputs.use_cache }}"
-          echo "build_configurations1: ${{ github.event.inputs.build_configurations }}"
+          echo "use_cache1: ${{ github.event.inputs.USE_CACHE }}"
+          echo "build_configurations1: ${{ github.event.inputs.BUILD_CONFIGS }}"
 
 
-          echo "use_cache2: ${{ env.use_cache }}"
-          echo "build_configurations2: ${{ env.build_configurations }}"  
+          echo "use_cache2: ${{ env.USE_CACHE }}"
+          echo "build_configurations2: ${{ env.BUILD_CONFIGS }}"  
         shell: pwsh
 
         
