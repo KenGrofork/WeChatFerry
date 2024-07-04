@@ -21,14 +21,11 @@ jobs:
     steps:
       - name: 设置默认值
         run: |
-          # $use_cache = "${{ github.event.inputs.use_cache || 'yes' }}"
-          # $build_configurations = "${{ github.event.inputs.build_configurations || 'Release,Debug' }}"
-          # echo "USE_CACHE=$use_cache" >> $env:GITHUB_ENV
-          # echo "BUILD_CONFIGURATIONS=$build_configurations" >> $env:GITHUB_ENV
-          
-          echo "USE_CACHE=${{ github.event.inputs.use_cache || 'yes' }}" >> $GITHUB_ENV
-          echo "BUILD_CONFIGS=${{ github.event.inputs.build_configurations || 'Release,Debug' }}" >> $GITHUB_ENV
-
+          $use_cache = "${{ github.event.inputs.use_cache || 'yes' }}"
+          $build_configurations = "${{ github.event.inputs.build_configurations || 'Release,Debug' }}"
+          echo "USE_CACHE=$use_cache" >> $env:GITHUB_ENV
+          echo "BUILD_CONFIGURATIONS=$build_configurations" >> $env:GITHUB_ENV
+   
           
           echo "use_cache1: $use_cache"
           echo "build_configurations1: $build_configurations"
