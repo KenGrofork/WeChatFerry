@@ -20,21 +20,18 @@ jobs:
   build:
     runs-on: windows-latest
 
-    steps:
-      - name: 检出代码
-        uses: actions/checkout@v4
         
       - name: 设置默认值
         run: |
-          USE_CACHE=${{ github.event.inputs.use_cache || 'yes' }}
-          BUILD_CONFIGS=${{ github.event.inputs.build_configurations || 'Release,Debug' }}
+          $use_cache = "${{ github.event.inputs.use_cache || 'yes' }}"
+          $build_configs = "${{ github.event.inputs.build_configurations || 'Release,Debug' }}"
 
-          echo "USE_CACHE=$USE_CACHE" >> $GITHUB_ENV
-          echo "BUILD_CONFIGS=$BUILD_CONFIGS" >> $GITHUB_ENV
+          echo "USE_CACHE=$use_cache" >> $env:GITHUB_ENV
+          echo "BUILD_CONFIGS=$build_configs" >> $env:GITHUB_ENV
 
-          echo "use_cache1: $USE_CACHE"
-          echo "build_configurations1: $BUILD_CONFIGS"
+          echo "use_cache1: $use_cache"
+          echo "build_configurations1: $build_configs"
 
-          echo "use_cache2: ${{ env.USE_CACHE }}"
-          echo "build_configurations2: ${{ env.BUILD_CONFIGS }}"  
+          echo "use_cache2: $env:USE_CACHE"
+          echo "build_configurations2: $env:BUILD_CONFIGS"  
         shell: pwsh
