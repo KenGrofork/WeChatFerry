@@ -31,7 +31,5 @@ jobs:
 
           echo "use_cache1: $use_cache"
           echo "build_configurations1: $build_configs"
-
-          echo "use_cache2: $env:USE_CACHE"
-          echo "build_configurations2: $env:BUILD_CONFIGS"  
+          
         shell: pwsh
