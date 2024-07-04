@@ -19,7 +19,15 @@ jobs:
         run: |
           echo "USE_CACHE=${{ github.event.inputs.use_cache || 'yes' }}" >> $GITHUB_ENV
           echo "BUILD_CONFIGS=${{ github.event.inputs.build_configurations || 'Release,Debug' }}" >> $GITHUB_ENV
-          echo "Program Version: $use_cache"
-          echo "WeChat Version: $build_configurations"
+
+          
+          echo "use_cache1: ${{ github.event.inputs.use_cache }}"
+          echo "build_configurations1: ${{ github.event.inputs.build_configurations }}"
+
+
+          echo "use_cache2: ${{ env.use_cache }}"
+          echo "build_configurations2: ${{ env.build_configurations }}"  
         shell: pwsh
+
+        
      
