@@ -3,10 +3,19 @@ name: test6666
 on:
   push:
     tags:
-      - 'v[0-9]+.[0-9]+.[0-9]+' 
+      - 'v[0-9]+.[0-9]+.[0-9]+'
 
-      
   workflow_dispatch:
+    inputs:
+      use_cache:
+        description: 'Use cache'
+        required: false
+        default: 'yes'
+      build_configurations:
+        description: 'Build configurations'
+        required: false
+        default: 'Release,Debug'
+
 jobs:
   build:
     runs-on: windows-latest
@@ -17,17 +26,15 @@ jobs:
         
       - name: 设置默认值
         run: |
-          echo "USE_CACHE=${{ github.event.inputs.use_cache || 'yes' }}" >> $GITHUB_ENV
-          echo "BUILD_CONFIGS=${{ github.event.inputs.build_configurations || 'Release,Debug' }}" >> $GITHUB_ENV
+          USE_CACHE=${{ github.event.inputs.use_cache || 'yes' }}
+          BUILD_CONFIGS=${{ github.event.inputs.build_configurations || 'Release,Debug' }}
 
-          
-          echo "use_cache1: ${{ github.event.inputs.USE_CACHE }}"
-          echo "build_configurations1: ${{ github.event.inputs.BUILD_CONFIGS }}"
+          echo "USE_CACHE=$USE_CACHE" >> $GITHUB_ENV
+          echo "BUILD_CONFIGS=$BUILD_CONFIGS" >> $GITHUB_ENV
 
+          echo "use_cache1: $USE_CACHE"
+          echo "build_configurations1: $BUILD_CONFIGS"
 
           echo "use_cache2: ${{ env.USE_CACHE }}"
           echo "build_configurations2: ${{ env.BUILD_CONFIGS }}"  
         shell: pwsh
-
-        
-     
