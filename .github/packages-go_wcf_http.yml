@@ -1,0 +1,45 @@
+name: Build Clients
+
+on:
+  workflow_dispatch:
+jobs:
+
+
+    build-go:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: '1.16'
+        
+      - name: Install MinGW
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y mingw-w64
+
+      - name: Build Go client
+        working-directory: ./clients/go_wcf_http
+        run: |
+          export GOOS=windows
+          export GOARCH=amd64
+          go build -ldflags="-s -w" -o go_wcf_http3.9.10.27.exe main.go
+
+      - name: Package Go client
+        run: |
+          mkdir -p temp/go
+          mv clients/go/go_wcf_http3.9.10.27.exe temp/go/
+
+
+      - name: Package all clients
+        run: |
+          mkdir -p packages
+          cd temp
+          for dir in */; do
+            zip -r "../packages/${dir%/}.zip" "$dir"
+          done
+          cd ..
+          ls packages
