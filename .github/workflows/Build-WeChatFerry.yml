@@ -60,13 +60,19 @@ jobs:
           .\vcpkg\vcpkg install minhook:x64-windows-static
           .\vcpkg\vcpkg integrate install
           echo "VCPKG_ROOT=C:/Tools/vcpkg" >> $GITHUB_ENV
-
+          
+      - name: 修改项目字符集设置
+        run: |
+          $projectPath = "WeChatFerry/spy/spy.vcxproj"
+          (Get-Content $projectPath) -replace '<CharacterSet>MultiByte</CharacterSet>', '<CharacterSet>Unicode</CharacterSet>' | Set-Content $projectPath
+        shell: pwsh
+        
       - name: 解析并构建配置
         run: |
           $configurations = "Release,Debug".Split(',')
           foreach ($config in $configurations) {
             Write-Host "Building configuration: $config"
-            msbuild WeChatFerry/WeChatFerry.sln /p:Configuration=$config /p:Platform="x64" /verbosity:detailed /p:CharacterSet="Unicode"
+            msbuild WeChatFerry/WeChatFerry.sln /p:Configuration=$config /p:Platform="x64" /verbosity:detailed
           }
         shell: pwsh
 
