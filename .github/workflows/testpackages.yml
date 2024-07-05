@@ -1,4 +1,4 @@
-name: Test Build Clients
+name: Build Clients
 
 on:
   workflow_dispatch:
@@ -19,9 +19,7 @@ jobs:
 
       - name: Set up Go environment
         run: |
-          mkdir -p $GOPATH/src/github.com/my/repo
-          mv * $GOPATH/src/github.com/my/repo
-          cd $GOPATH/src/github.com/my/repo
+          echo "export PATH=\$PATH:/usr/local/go/bin" >> $GITHUB_ENV
 
       - name: Install MinGW
         run: |
@@ -33,7 +31,7 @@ jobs:
         run: |
           export GOOS=windows
           export GOARCH=amd64
-          /usr/local/go/bin/go build -ldflags="-s -w" -o go_wcf_http3.9.10.27.exe main.go
+          go build -ldflags="-s -w" -o go_wcf_http3.9.10.27.exe main.go
 
       - name: Package Go client
         run: |
