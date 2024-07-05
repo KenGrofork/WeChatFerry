@@ -47,7 +47,18 @@ jobs:
           key: ${{ runner.os }}-dependencies-${{ hashFiles('**/WeChatFerry/spy/spy.rc') }}
           restore-keys: |
             ${{ runner.os }}-dependencies-
-
+            
+      - name: 设置语言环境为 UTF-8
+        run: |
+          Set-WinSystemLocale en-US
+          Set-WinUserLanguageList en-US -Force
+          Set-WinUILanguageOverride en-US
+          Set-WinSystemLocale en-US
+          Set-WinHomeLocation -GeoId 244
+          Set-Culture en-US
+          Set-WinUILanguageOverride en-US
+          
+        shell: pwsh
       - name: 安装 vcpkg 和依赖项
         run: |
           cd C:/Tools
