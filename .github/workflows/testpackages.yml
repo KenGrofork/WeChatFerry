@@ -9,12 +9,20 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-        
-      - name: Set up Go
-        uses: actions/setup-go@v4
-        with:
-          go-version: '1.16'
-        
+
+      - name: Install specific Go version
+        run: |
+          wget https://golang.org/dl/go1.21.5.linux-amd64.tar.gz
+          sudo tar -C /usr/local -xzf go1.21.5.linux-amd64.tar.gz
+          export PATH=$PATH:/usr/local/go/bin
+          go version
+
+      - name: Set up Go environment
+        run: |
+          mkdir -p $GOPATH/src/github.com/my/repo
+          mv * $GOPATH/src/github.com/my/repo
+          cd $GOPATH/src/github.com/my/repo
+
       - name: Install MinGW
         run: |
           sudo apt-get update
@@ -25,12 +33,12 @@ jobs:
         run: |
           export GOOS=windows
           export GOARCH=amd64
-          go build -ldflags="-s -w" -o go_wcf_http3.9.10.27.exe main.go
+          /usr/local/go/bin/go build -ldflags="-s -w" -o go_wcf_http3.9.10.27.exe main.go
 
       - name: Package Go client
         run: |
           mkdir -p temp/go
-          mv go_wcf_http3.9.10.27.exe temp/go/
+          mv clients/go_wcf_http/go_wcf_http3.9.10.27.exe temp/go/
 
       - name: Package all clients
         run: |
