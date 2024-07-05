@@ -22,7 +22,15 @@ jobs:
           echo "Program Version: $version"
           echo "WeChat Version: $wechat_version"
         shell: pwsh
-
+        
+      - name: 设置语言环境为 UTF-8
+        run: |
+          $locale = New-Object System.Globalization.CultureInfo('en-US')
+          [System.Globalization.CultureInfo]::DefaultThreadCurrentCulture = $locale
+          [System.Globalization.CultureInfo]::DefaultThreadCurrentUICulture = $locale
+          [System.Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+        shell: pwsh
+        
       - name: 设置 Visual Studio 2019
         uses: microsoft/setup-msbuild@v2
         with:
@@ -49,16 +57,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install grpcio-tools==1.48.2
 
-      - name: 设置语言环境为 UTF-8
-        run: |
-          Set-WinSystemLocale en-US
-          Set-WinUserLanguageList en-US -Force
-          Set-WinUILanguageOverride en-US
-          Set-WinSystemLocale en-US
-          Set-WinHomeLocation -GeoId 244
-          Set-Culture en-US
-          Set-WinUILanguageOverride en-US
-          
         shell: pwsh
       - name: 安装 vcpkg 和依赖项
         run: |
