@@ -67,17 +67,21 @@ jobs:
       - name: 解析并构建配置
         run: |
           $configurations = "Release,Debug".Split(',')
+          $platforms = "x86,x64".Split(',')
           foreach ($config in $configurations) {
-            Write-Host "Building configuration: $config"
-            msbuild WeChatFerry/WeChatFerry.sln /p:Configuration=$config /p:Platform="x86"  /verbosity:detailed
+            foreach ($platform in $platforms) {
+              Write-Host "Building configuration: $config on $platform"
+              msbuild WeChatFerry/WeChatFerry.sln /p:Configuration=$config /p:Platform=$platform /verbosity:detailed
+            }
           }
         shell: pwsh
+
 
       - name: 打包输出文件及下载 WeChat 安装包
         run: |
           New-Item -ItemType Directory -Force -Path "WeChatFerry/tmp"
-          Compress-Archive -Path "WeChatFerry/Out/sdk.dll", "WeChatFerry/Out/spy.dll", "WeChatFerry/Out/spy_debug.dll" -DestinationPath "WeChatFerry/tmp/WeChatFerry-${{ env.version }}.zip"
-          # Compress-Archive -Path "WeChatFerry/Out/*" -DestinationPath "WeChatFerry/tmp/WeChatFerry-${{ env.version }}.zip"
+          # Compress-Archive -Path "WeChatFerry/Out/sdk.dll", "WeChatFerry/Out/spy.dll", "WeChatFerry/Out/spy_debug.dll" -DestinationPath "WeChatFerry/tmp/WeChatFerry-${{ env.version }}.zip"
+          Compress-Archive -Path "WeChatFerry/Out/*" -DestinationPath "WeChatFerry/tmp/WeChatFerry-${{ env.version }}.zip"
           Invoke-WebRequest -Uri "https://github.com/tom-snow/wechat-windows-versions/releases/download/v${{ env.wechat_version }}/WeChatSetup-${{ env.wechat_version }}.exe" -OutFile "WeChatFerry/tmp/WeChatSetup-${{ env.wechat_version }}.exe"
         shell: pwsh
 
