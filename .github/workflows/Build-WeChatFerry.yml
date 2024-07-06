@@ -5,6 +5,16 @@ on:
     tags:
       - "v[0-9]+.[0-9]+.[0-9]+"
   workflow_dispatch:
+    inputs:
+      use_cache:
+        description: '是否使用缓存'
+        required: true
+        default: 'yes'
+        type: choice
+        options:
+          - 'yes'
+          - 'no'
+          
 jobs:
   build:
     runs-on: windows-latest
@@ -35,6 +45,7 @@ jobs:
           python-version: "3.9"
 
       - name: 设置缓存
+        if: github.event.inputs.use_cache == 'yes'
         id: cache-dependencies
         uses: actions/cache@v4
         with:
