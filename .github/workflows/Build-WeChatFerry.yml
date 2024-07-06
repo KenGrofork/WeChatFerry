@@ -51,7 +51,6 @@ jobs:
         with:
           path: |
             C:/Tools/vcpkg
-            C:/hostedtoolcache/windows/python
           key: ${{ runner.os }}-dependencies-${{ hashFiles('**/WeChatFerry/spy/spy.rc') }}
           restore-keys: |
             ${{ runner.os }}-dependencies-
@@ -78,7 +77,7 @@ jobs:
       - name: 解析并构建配置
         run: |
           $configurations = "Release,Debug".Split(',')
-          $platforms = "x86".Split(',')
+          $platforms = "x64".Split(',')
           foreach ($config in $configurations) {
             foreach ($platform in $platforms) {
               Write-Host "Building configuration: $config on $platform"
