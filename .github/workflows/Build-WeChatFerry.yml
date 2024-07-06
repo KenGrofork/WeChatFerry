@@ -67,7 +67,7 @@ jobs:
       - name: 解析并构建配置
         run: |
           $configurations = "Release,Debug".Split(',')
-          $platforms = "x86,x64".Split(',')
+          $platforms = "x86".Split(',')
           foreach ($config in $configurations) {
             foreach ($platform in $platforms) {
               Write-Host "Building configuration: $config on $platform"
