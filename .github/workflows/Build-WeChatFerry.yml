@@ -23,13 +23,6 @@ jobs:
           echo "WeChat Version: $wechat_version"
         shell: pwsh
         
-      - name: 设置语言环境为 UTF-8
-        run: |
-          $locale = New-Object System.Globalization.CultureInfo('en-US')
-          [System.Globalization.CultureInfo]::DefaultThreadCurrentCulture = $locale
-          [System.Globalization.CultureInfo]::DefaultThreadCurrentUICulture = $locale
-          [System.Console]::OutputEncoding = [System.Text.Encoding]::UTF8
-        shell: pwsh
         
       - name: 设置 Visual Studio 2019
         uses: microsoft/setup-msbuild@v2
@@ -76,7 +69,7 @@ jobs:
           $configurations = "Release,Debug".Split(',')
           foreach ($config in $configurations) {
             Write-Host "Building configuration: $config"
-            msbuild WeChatFerry/WeChatFerry.sln /p:Configuration=$config /p:Platform="x64" /p:CodePage=65001 /verbosity:detailed
+            msbuild WeChatFerry/WeChatFerry.sln /p:Configuration=$config /p:Platform="x86"  /verbosity:detailed
           }
         shell: pwsh
 
